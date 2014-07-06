@@ -26,6 +26,36 @@ u32int strlen(char *str) {
 	return i;
 }
 
+void memcpy(u8int *dest, const u8int *src, u32int len) {
+    u8int *pdest = (u8int*) dest;
+    u8int *psrc = (u8int*) src;
+
+    int loops = (int)(len / sizeof(u32int));
+    for(int index = 0; index < loops; ++index) {
+        *((u32int*)pdest) = *((u32int*)psrc);
+        pdest += sizeof(u32int);
+        psrc += sizeof(u32int);
+    }
+
+    loops = (len % sizeof(u32int));
+    for (int index = 0; index < loops; ++index) {
+        *pdest = *psrc;
+        ++pdest;
+        ++psrc;
+    }
+}
+
+void memset(u8int *dest, u8int val, u32int len) {
+    if (dest && len > 0) {
+        unsigned char* pChar =  dest;
+        int i = 0;
+        for ( i = 0; i < len; ++i) {
+            unsigned char temp = (unsigned char) val;
+            *pChar++ = temp; // or pChar[i] = temp (they both don't work)
+        }
+    }
+}
+
 int strcmp(char *str1, char *str2) {
 	int i = 0;
 	int ret;

@@ -1,4 +1,4 @@
-; boot.s
+; boot.s -- Brad Slayter
 
 
 MBOOT_PAGE_ALIGN	equ 1<<0

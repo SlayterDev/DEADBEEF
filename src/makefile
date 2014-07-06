@@ -1,3 +1,5 @@
+# makefile -- Brad Slayter
+
 SOURCES=boot.o main.o monitor.o common.o
 
 CC=i686-elf-gcc

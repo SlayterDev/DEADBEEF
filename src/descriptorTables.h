@@ -14,7 +14,7 @@ typedef struct gdtEntryStruct gdtEntry_t;
 
 struct gdtPtrStruct {
 	u16int limit;
-	u16int base;
+	u32int base;
 } __attribute__((packed));
 typedef struct gdtPtrStruct gdtPtr_t;
 

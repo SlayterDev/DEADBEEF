@@ -1,3 +1,5 @@
+; gdt.s -- Brad Slayter
+
 [GLOBAL gdtFlush]
 
 gdtFlush:

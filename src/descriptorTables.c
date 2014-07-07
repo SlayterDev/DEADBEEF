@@ -20,7 +20,7 @@ idtPtr_t	idtPtr;
 
 void initDescriptorTables() {
 	monitorWrite("initGDT\n");
-	//initGdt();
+	initGdt();
 	monitorWrite("initIdt\n");
 	initIdt();
 }

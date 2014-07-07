@@ -2,11 +2,13 @@
 
 #include "common.h"
 #include "monitor.h"
+#include "descriptorTables.h"
 
 int main(struct multiboot *mbootPtr) {
 	// Init code here
-
 	monitorClear();
+	initDescriptorTables();
+
 	monitorWriteHex(0xDEADBABA);
 	monitorWrite("\n==================\n");
 
@@ -43,7 +45,12 @@ int main(struct multiboot *mbootPtr) {
 	monitorWrite("str2 contains: ");
 	monitorWrite(str2);
 	monitorPut('\n');
+	monitorWrite("==================\n");
 
+	//monitorWriteDec(300);
+
+	//asm volatile("int $0x3");
+	//asm volatile("int $0x4");
 
 	return 0xDEADBABA;
 }

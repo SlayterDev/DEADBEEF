@@ -17,4 +17,6 @@ void monitorWrite(char *c);
 // Write hex representation of n to terminal
 void monitorWriteHex(u32int n);
 
+void moniterWriteDec(u32int n);
+
 #endif

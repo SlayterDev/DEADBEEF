@@ -1,6 +1,7 @@
 // common.c -- Brad Slayter
 
 #include "common.h"
+#include "monitor.h"
 
 void outb(u16int port, u8int value) {
 	asm volatile("outb %1, %0" : : "dN" (port), "a" (value));
@@ -98,4 +99,36 @@ char *strcat(char *dest, const char *source) {
 	*a = 0;
 
 	return dest;
+}
+
+extern void panic(const char *message, const char *file, u32int line)
+{
+    // We encountered a massive problem and have to stop.
+    asm volatile("cli"); // Disable interrupts.
+
+    monitorWrite("PANIC(");
+    monitorWrite(message);
+    monitorWrite(") at ");
+    monitorWrite(file);
+    monitorWrite(":");
+    monitorWriteDec(line);
+    monitorWrite("\n");
+    // Halt by going into an infinite loop.
+    for(;;);
+}
+
+extern void panic_assert(const char *file, u32int line, const char *desc)
+{
+    // An assertion failed, and we have to panic.
+    asm volatile("cli"); // Disable interrupts.
+
+    monitorWrite("ASSERTION-FAILED(");
+    monitorWrite(desc);
+    monitorWrite(") at ");
+    monitorWrite(file);
+    monitorWrite(":");
+    monitorWriteDec(line);
+    monitorWrite("\n");
+    // Halt by going into an infinite loop.
+    for(;;);
 }

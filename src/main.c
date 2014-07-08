@@ -3,11 +3,14 @@
 #include "common.h"
 #include "monitor.h"
 #include "descriptorTables.h"
+#include "timer.h"
+#include "paging.h"
 
 int main(struct multiboot *mbootPtr) {
 	// Init code here
 	monitorClear();
 	initDescriptorTables();
+	initialisePaging();
 
 	monitorWriteHex(0xDEADBABA);
 	monitorWrite("\n==================\n");
@@ -47,10 +50,8 @@ int main(struct multiboot *mbootPtr) {
 	monitorPut('\n');
 	monitorWrite("==================\n");
 
-	//monitorWriteDec(300);
-
-	asm volatile("int $0x3");
-	asm volatile("int $0x4");
+	u32int *ptr = (u32int *)0xA0000000;
+	u32int doPageFault = *ptr;
 
 	return 0xDEADBABA;
 }

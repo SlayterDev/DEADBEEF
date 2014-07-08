@@ -78,7 +78,7 @@ void monitorClear() {
 	moveCursor();
 }
 
-void monitorWrite(char *c) {
+void monitorWrite(const char *c) {
 	int i = 0;
 	while (c[i]) {
 		monitorPut(c[i++]);

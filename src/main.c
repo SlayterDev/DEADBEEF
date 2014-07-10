@@ -5,53 +5,34 @@
 #include "descriptorTables.h"
 #include "timer.h"
 #include "paging.h"
+#include "kheap.h"
 
 int main(struct multiboot *mbootPtr) {
 	// Init code here
 	monitorClear();
 	initDescriptorTables();
+
+	u32int a = kmalloc(8);
+
 	initialisePaging();
 
-	monitorWriteHex(0xDEADBABA);
-	monitorWrite("\n==================\n");
+	u32int b = kmalloc(8);
+	u32int c = kmalloc(8);
 
-	char dog[4] = "dog\0";
-	int ret = strcmp(dog, dog);
-	if (ret == 0)
-		monitorWrite("Dog is equal to dog\n");
-	else
-		monitorWrite("Dog is wrong\n");
+	monitorWrite("a: ");
+	monitorWriteHex(a);
+	monitorWrite(", b: ");
+	monitorWriteHex(b);
+	monitorWrite("\nc: ");
+	monitorWriteHex(c);
 
-	monitorWrite("==================\n");
+	kfree(c);
+	kfree(b);
+	u32int d = kmalloc(12);
+	monitorWrite(", d: ");
+	monitorWriteHex(d);
 
-	char cat[4] = "cat\0";
-	ret = strcmp(dog, cat);
-	if (ret == 1)
-		monitorWrite("Dog is greater than cat\n");
-	else
-		monitorWrite("Dog v. cat is wrong\n");
+	
 
-	monitorWrite("==================\n");
-
-	char epitome[8] = "epitome\0";
-	ret = strcmp(dog, epitome);
-	if (ret == -1)
-		monitorWrite("Dog is less than epitome\n");
-	else
-		monitorWrite("Dog v. epitome is wrong\n");
-
-	monitorWrite("==================\n");
-
-	char str1[50] = "Brad Slayter";
-	char str2[50];
-	strcpy(str2, str1);
-	monitorWrite("str2 contains: ");
-	monitorWrite(str2);
-	monitorPut('\n');
-	monitorWrite("==================\n");
-
-	u32int *ptr = (u32int *)0xA0000000;
-	u32int doPageFault = *ptr;
-
-	return 0xDEADBABA;
+	return 0xDEADBEEF;
 }

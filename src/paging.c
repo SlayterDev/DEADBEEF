@@ -4,16 +4,16 @@
 #include "kheap.h"
 #include "monitor.h"
 
-// The kernel's page directory
-pageDirectory_t *kernelDirectory = 0;
-
 // The current page directory;
+pageDirectory_t *kernelDirectory = 0;
 pageDirectory_t *currentDirectory = 0;
 
 u32int *frames;
 u32int nFrames;
 
 extern u32int placementAddress;
+
+extern heap_t *kheap;
 
 #define INDEX_FROM_BIT(a) (a/(8*4))
 #define OFFSET_FROM_BIT(a) (a%(8*4))
@@ -80,6 +80,8 @@ void freeFrame(page_t *page) {
 }
 
 void initialisePaging() {
+	//kernelDirectory = 0;
+
 	u32int memEndPage = 0x10000000;
 
 	nFrames = memEndPage / 0x1000;
@@ -91,14 +93,24 @@ void initialisePaging() {
 	currentDirectory = kernelDirectory;
 
 	int i = 0;
-	while (i < placementAddress) {
+	for (i = KHEAP_START; i < KHEAP_START + KHEAP_INITIAL_SIZE; i += 0x1000) {
+		getPage(i, 1, kernelDirectory);
+	}
+
+	i = 0;
+	while (i < placementAddress + 0x1000) {
 		allocFrame(getPage(i, 1, kernelDirectory), 0, 0);
 		i += 0x1000;
 	}
 
+	for (i = KHEAP_START; i < KHEAP_START + KHEAP_INITIAL_SIZE; i += 0x1000)
+		allocFrame(getPage(i, 1, kernelDirectory), 0, 0);
+
 	registerInteruptHandler(14, pageFault);
 
 	switchPageDirectory(kernelDirectory);
+
+	kheap = createHeap(KHEAP_START, KHEAP_START + KHEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
 }
 
 void switchPageDirectory(pageDirectory_t *dir) {

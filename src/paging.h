@@ -31,9 +31,13 @@ typedef struct pageDirectory {
 	u32int physicalAddr;
 } pageDirectory_t;
 
+//pageDirectory_t *kernelDirectory;
+
 void switchPageDirectory(pageDirectory_t *new);
 page_t *getPage(u32int address, int make, pageDirectory_t *dir);
 void pageFault(registers_t regs);
 void initialisePaging();
+void allocFrame(page_t *page, int isKernel, int isWriteable);
+void freeFrame(page_t *page);
 
 #endif

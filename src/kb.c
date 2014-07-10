@@ -44,6 +44,18 @@ unsigned char kbdus[128] =
     0,	/* All other keys are undefined */
 };
 
+modifierKeys_t mK;
+
+char upperChar(char c) {
+	char c2;
+	if (c >= 'a' && c <= 'z') {
+		c2 = ('A' + c - 'a');
+		return c2;
+	} else {
+		return c;
+	}
+}
+
 void keyboardHandler(registers_t regs) {
 	unsigned char scancode;
 
@@ -51,16 +63,39 @@ void keyboardHandler(registers_t regs) {
 
 	if (scancode & 0x80) {
 		// key release
+		unsigned char newSc = scancode - 128;
+
+		if (newSc == 42 || newSc == 54) {
+			mK.lShift = 0;
+		}
 	} else {
 		if (kbdus[scancode] == '\b') {
 			monitorBackSpace();
 			return;
+		} else if (kbdus[scancode] == '\n') {
+			monitorWrite("\n>");
+			return;
 		}
 
-		monitorPut(kbdus[scancode]);
+		if (mK.lShift)
+			monitorPut(upperChar(kbdus[scancode]));
+		else
+			monitorPut(kbdus[scancode]);
+
+		if (scancode == 42 || scancode == 54) {
+			// shift keys
+			mK.lShift = 1;
+		}
 	}
 }
 
 void installKeyboard() {
 	registerInteruptHandler(IRQ1, &keyboardHandler);
+
+	mK.lShift = 0;
+	mK.rShift = 0;
+	mK.lCtrl = 0;
+	mK.rCtrl = 0;
+	mK.lAlt = 0;
+	mK.rAlt = 0;
 }

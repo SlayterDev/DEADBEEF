@@ -14,6 +14,8 @@ void monitorClear();
 // Write string to terminal
 void monitorWrite(const char *c);
 
+void monitorBackSpace();
+
 // Write hex representation of n to terminal
 void monitorWriteHex(u32int n);
 

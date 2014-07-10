@@ -52,6 +52,11 @@ void keyboardHandler(registers_t regs) {
 	if (scancode & 0x80) {
 		// key release
 	} else {
+		if (kbdus[scancode] == '\b') {
+			monitorBackSpace();
+			return;
+		}
+
 		monitorPut(kbdus[scancode]);
 	}
 }

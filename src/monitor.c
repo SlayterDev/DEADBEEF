@@ -85,6 +85,21 @@ void monitorWrite(const char *c) {
 	}
 }
 
+void monitorBackSpace() {
+	cursorX--;
+	if (cursorX < 0)
+		cursorX = 0;
+
+	moveCursor();
+	monitorPut(' ');
+
+	cursorX--;
+	if (cursorX < 0)
+		cursorX = 0;
+
+	moveCursor();
+}
+
 void monitorWriteHex(u32int n) {
 	static char hex [] = { '0', '1', '2', '3', '4', '5', '6', '7',
                         '8', '9' ,'A', 'B', 'C', 'D', 'E', 'F' };

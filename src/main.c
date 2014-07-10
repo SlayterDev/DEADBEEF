@@ -6,31 +6,19 @@
 #include "timer.h"
 #include "paging.h"
 #include "kheap.h"
+#include "kb.h"
 
 int main(struct multiboot *mbootPtr) {
 	// Init code here
 	monitorClear();
 	initDescriptorTables();
 
-	u32int a = kmalloc(8);
+	asm volatile("sti");
 
 	initialisePaging();
+	installKeyboard();
 
-	u32int b = kmalloc(8);
-	u32int c = kmalloc(8);
-
-	monitorWrite("a: ");
-	monitorWriteHex(a);
-	monitorWrite(", b: ");
-	monitorWriteHex(b);
-	monitorWrite("\nc: ");
-	monitorWriteHex(c);
-
-	kfree(c);
-	kfree(b);
-	u32int d = kmalloc(12);
-	monitorWrite(", d: ");
-	monitorWriteHex(d);
+	monitorPut('>');
 
 	
 

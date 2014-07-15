@@ -8,9 +8,9 @@ isr_t interruptHandlers[256];
 
 void registerInteruptHandler(u8int n, isr_t handler) {
 	interruptHandlers[n] = handler;
-	monitorWrite("Interrupt ");
+	/*monitorWrite("Interrupt ");
 	monitorWriteDec(n);
-	monitorWrite(" Registered\n");
+	monitorWrite(" Registered\n");*/
 }
 
 void isrHandler(registers_t regs) {

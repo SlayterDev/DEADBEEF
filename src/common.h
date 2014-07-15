@@ -26,6 +26,9 @@ void memcpy(u8int *dest, const u8int *src, u32int len);
 // Set len bytes in dest with val
 void memset(void *dest, u8int val, u32int len);
 
+// Get length of string
+u32int strlen(char *str);
+
 // compare str1 and str2
 // -1 if str1 < str2
 // 0 if str1 == str2
@@ -33,7 +36,7 @@ void memset(void *dest, u8int val, u32int len);
 int strcmp(char *str1, char *str2);
 
 // copy dest string into source string
-char *strcpy(char *dest, const char *source);
+char *strcpy(char *dest, const char *src);
 
 // concatenate second string onto first string
 char *strcat(char *first, const char *second);

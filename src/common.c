@@ -28,22 +28,9 @@ u32int strlen(char *str) {
 }
 
 void memcpy(u8int *dest, const u8int *src, u32int len) {
-    u8int *pdest = (u8int*) dest;
-    u8int *psrc = (u8int*) src;
-
-    int loops = (int)(len / sizeof(u32int));
-    for(int index = 0; index < loops; ++index) {
-        *((u32int*)pdest) = *((u32int*)psrc);
-        pdest += sizeof(u32int);
-        psrc += sizeof(u32int);
-    }
-
-    loops = (len % sizeof(u32int));
-    for (int index = 0; index < loops; ++index) {
-        *pdest = *psrc;
-        ++pdest;
-        ++psrc;
-    }
+    const u8int *sp = (const u8int *)src;
+    u8int *dp = (u8int *)dest;
+    for(; len != 0; len--) *dp++ = *sp++;
 }
 
 void memset(void *dest, u8int val, u32int len) {
@@ -79,14 +66,10 @@ int strcmp(char *str1, char *str2) {
 	return ret;
 }
 
-char *strcpy(char *dest, const char *source) {
-	int i = 0;
-	while (source[i]) {
-		dest[i] = source[i];
-		i++;
-	}
-
-	return dest;
+char *strcpy(char *dest, const char *src) {
+    do {
+      *dest++ = *src++;
+    } while (*src != 0);
 }
 
 char *strcat(char *dest, const char *source) {

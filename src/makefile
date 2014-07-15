@@ -1,7 +1,7 @@
 # makefile -- Brad Slayter
 
 SOURCES=boot.o main.o monitor.o common.o descriptorTables.o isr.o interrupt.o gdt.o timer.o kheap.o paging.o orderedArray.o \
-kb.o
+kb.o fs.o initrd.o
 
 CC=i686-elf-gcc
 

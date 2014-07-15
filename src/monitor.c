@@ -40,7 +40,7 @@ void monitorPut(char c) {
 	u16int attribute = attributeByte << 8;
 	u16int *location;
 
-	if (c == 0x08 && cursorX) {
+	if (c == 0x08 && cursorX) { // backspace byte
 		cursorX--;
 	} else if (c == 0x09) {
 		cursorX = (cursorX + 4) & ~(4-1);

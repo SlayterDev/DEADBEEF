@@ -54,7 +54,11 @@ int kernelMain(struct multiboot *mbootPtr) {
 	installKeyboard();
 
 	monitorPut('>');
-
+	char *str;
+	scanStr(&str);
+	monitorWrite("Read from user: ");
+	monitorWrite(str);
+	monitorWrite("\n>");
 	
 
 	return 0xDEADBEEF;

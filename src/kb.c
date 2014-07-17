@@ -3,6 +3,7 @@
 #include "kb.h"
 #include "monitor.h"
 #include "isr.h"
+#include "kheap.h"
 
 unsigned char kbdus[128] =
 {
@@ -45,6 +46,10 @@ unsigned char kbdus[128] =
 };
 
 modifierKeys_t mK;
+
+u8int readingInput = 0;
+char tempBuffer[256];
+u32int bufferCount = 0;
 
 char charToSymbol(char c) {
 	switch (c) {
@@ -118,7 +123,9 @@ void keyboardHandler(registers_t regs) {
 			monitorBackSpace();
 			return;
 		} else if (kbdus[scancode] == '\n') {
-			monitorWrite("\n>");
+			monitorWrite("\n");
+			if (readingInput)
+				readingInput = 0;
 			return;
 		}
 
@@ -127,11 +134,34 @@ void keyboardHandler(registers_t regs) {
 		else
 			monitorPut(kbdus[scancode]);
 
+		if (readingInput && (scancode != 42 && scancode != 54)) {
+			if (!mK.lShift)
+				tempBuffer[bufferCount] = kbdus[scancode];
+			else
+				tempBuffer[bufferCount] = upperChar(kbdus[scancode]);
+			bufferCount++;
+		}
+
 		if (scancode == 42 || scancode == 54) {
 			// shift keys
 			mK.lShift = 1;
 		}
 	}
+}
+
+void scanStr(char **buf) {
+	tempBuffer[0] = 0;
+	bufferCount = 0;
+	readingInput = 1;
+
+	while (readingInput) {
+		// empty block?
+	}
+
+	tempBuffer[bufferCount++] = '\0';
+
+	*buf = (char *)kmalloc(bufferCount);
+	strcpy(*buf, tempBuffer);
 }
 
 void installKeyboard() {

@@ -1,4 +1,5 @@
 // paging.h -- Brad Slayter
+// A basic paging system
 
 #ifndef PAGING_H
 #define PAGING_H

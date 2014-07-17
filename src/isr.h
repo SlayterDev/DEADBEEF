@@ -1,4 +1,6 @@
 // isr.h -- Brad Slayter
+// this file contains macros to interrupt handler id's
+// as well as providing a way to register interrupt handlers
 
 #ifndef ISR_H
 #define ISR_H

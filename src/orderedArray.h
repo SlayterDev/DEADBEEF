@@ -1,4 +1,5 @@
 // orderedArray.h -- Brad Slayter
+// An implementation of an ordered array
 
 #ifndef ORDERED_ARRAY_H
 #define ORDERED_ARRAY_H

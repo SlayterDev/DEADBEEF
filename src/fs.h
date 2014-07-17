@@ -1,4 +1,5 @@
 // fs.h -- Brad Slayter
+// This file defines an abstraction for a file system
 
 #ifndef FS_H
 #define FS_H
@@ -47,11 +48,22 @@ struct dirent {
 
 extern fsNode_t *fsRoot;
 
+// Read from file
 u32int readFs(fsNode_t *node, u32int offset, u32int size, u8int *buffer);
+
+// Write to file
 u32int writeFs(fsNode_t *node, u32int offset, u32int size, u8int *buffer);
+
+// open file/dir
 void openFs(fsNode_t *node, u8int read, u8int write);
+
+// Close file/dir
 void closeFs(fsNode_t *node);
+
+// Read dir
 struct dirent *readdirFs(fsNode_t *node, u32int index);
+
+// Find dir
 fsNode_t *finddirFs(fsNode_t *node, char *name);
 
 #endif

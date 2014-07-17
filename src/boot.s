@@ -1,5 +1,6 @@
 ; boot.s -- Brad Slayter
-
+; This is the entry point of our kernel
+; This file defines us, and calls our C code to get started
 
 MBOOT_PAGE_ALIGN	equ 1<<0
 MBOOT_MEM_INFO		equ 1<<1

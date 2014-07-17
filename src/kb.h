@@ -1,10 +1,14 @@
 // kb.h -- Brad Slayter
+// This file contains code to communicate with the keyboard and
+// recieve button presses from the user. As well it includes basic
+// functions to get input from the user
 
 #ifndef KB_H
 #define KB_H
 
 #include "common.h"
 
+// struct to hold the state of modifier keys
 struct modifierKeys {
 	u8int lShift;
 	u8int rShift;
@@ -15,6 +19,7 @@ struct modifierKeys {
 };
 typedef struct modifierKeys modifierKeys_t;
 
+// Install the keyboard handler
 void installKeyboard();
 
 // Scans a string from the "command line" until new line is pressed

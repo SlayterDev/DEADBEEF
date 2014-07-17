@@ -1,4 +1,5 @@
 // kheap.h -- Brad Slayter
+// A basic memory sub-system for out OS
 
 #ifndef KHEAP_H
 #define KHEAP_H

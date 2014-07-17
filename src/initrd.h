@@ -1,4 +1,5 @@
 // initrd.h -- Brad Slayter
+// This file contains code to create the Ram Disk and read from it
 
 #ifndef INITRD_H
 #define INITRD_H
@@ -18,6 +19,7 @@ typedef struct {
 	u32int length;
 } initrdFileHeader_t;
 
+// Create the ramdisk from the at the specified location
 fsNode_t *initializeInitrd(u32int location);
 
 #endif

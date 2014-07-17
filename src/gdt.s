@@ -1,4 +1,5 @@
 ; gdt.s -- Brad Slayter
+; Assembly helper for descriptorTables.c
 
 [GLOBAL gdtFlush]
 

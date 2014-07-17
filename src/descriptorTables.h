@@ -1,4 +1,5 @@
 // descriptorTable.h -- Brad Slayter
+// This file sets up interrups and exceptions
 
 // This struct contains one GDT entry
 // "packed" tells GCC not to change alignment
@@ -85,4 +86,5 @@ extern void irq13();
 extern void irq14();
 extern void irq15();
 
+// Set up tables and interrupts
 void initDescriptorTables();

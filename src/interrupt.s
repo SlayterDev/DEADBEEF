@@ -1,4 +1,5 @@
 ; interupt.s -- Brad Slayter
+; Assembly helper to define stubs for interrupts
 
 ;[GLOBAL isr0]
 ;isr0:

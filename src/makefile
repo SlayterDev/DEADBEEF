@@ -5,7 +5,7 @@ kb.o fs.o initrd.o
 
 CC=i686-elf-gcc
 
-CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector -lgcc -std=gnu99
+CFLAGS=-nostdlib -fno-builtin -fno-stack-protector -lgcc -std=gnu99
 LDFLAGS=-T Link.ld -ffreestanding -O2 -nostdlib
 ASFLAGS=-felf
 

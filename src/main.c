@@ -55,7 +55,7 @@ int kernelMain(struct multiboot *mbootPtr) {
 
 	monitorPut('>');
 	char *str;
-	scanStr(&str);
+	DBscanf("%s", &str);
 	monitorWrite("Read from user: ");
 	monitorWrite(str);
 	monitorWrite("\n>");

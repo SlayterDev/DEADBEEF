@@ -164,6 +164,63 @@ void scanStr(char **buf) {
 	strcpy(*buf, tempBuffer);
 }
 
+void scanDec(int *n) {
+	char *decBuf;
+	scanStr(&decBuf);
+
+	int temp = 0, i;
+	for (i = 0; i < strlen(decBuf); i++) {
+		temp = temp * 10 + (decBuf[i] - '0');
+	}
+
+	*n = temp;
+}
+
+// currently only works for one variable
+// more than one is undefined behaivor and I can not be held responsible
+// for what happens
+void DBscanf(const char *format, ...) {
+	u8int formNxt = 0; // next char is format
+	char formList[64];
+	int formCnt = 0;
+
+	int readXtra = 0;
+	int numXtra[64];
+
+	int i = 0, xtraCntr = 0, xtraPtr = 0;
+	while (format[i]) {
+		if (formNxt) {
+			formNxt = 0; // reset flag
+
+			if (format[i] == 'd' || format[i] == 's')
+				formList[formCnt++] = format[i];
+		} else if (format[i] != '%') {
+			readXtra = 1;
+		}
+
+		if (format[i] == '%') {
+			formNxt = 1;
+			readXtra = 0;
+		} else if (readXtra) {
+			xtraCntr++;
+		}
+
+
+		i++;
+	}
+
+	va_list list;
+	va_start(list, format);
+	for (i = 0; i < formCnt; i++) {
+		if (formList[i] == 'd') {
+			scanDec(va_arg(list, int*));
+		} else if (formList[i] == 's') {
+			scanStr(va_arg(list, char**));
+		}
+	}
+	va_end(list);
+}
+
 void installKeyboard() {
 	registerInteruptHandler(IRQ1, &keyboardHandler);
 

@@ -7,6 +7,7 @@
 #define KB_H
 
 #include "common.h"
+#include <stdarg.h>
 
 // struct to hold the state of modifier keys
 struct modifierKeys {
@@ -26,5 +27,7 @@ void installKeyboard();
 // Should pass un allocated char pointer
 // function will allocate enough memory and store the scanned string
 void scanStr(char **buf);
+void scanDec(int *n);
+void DBscanf(const char *format, ...);
 
 #endif

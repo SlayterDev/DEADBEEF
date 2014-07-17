@@ -11,7 +11,7 @@ struct initrdHeader {
 	unsigned int length; // Length of file
 };
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
 	int nHeaders = (argc - 1) / 2;
 	struct initrdHeader headers[64];
 	printf("[*] Size of header: %d\n", sizeof(struct initrdHeader));
@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
 	for (i = 0; i < nHeaders; i++) {
 		printf("[+] Writing file %s->%s at 0x%x\n", argv[i*2+1], argv[i*2+2], off);
 		strcpy(headers[i].name, argv[i*2+2]);
+		headers[i].name[strlen(argv[i*2+2])] = '\0'; // NULL TERMINATE
 		FILE *stream = fopen(argv[i*2+1], "r");
 		if (stream == 0) {
 			printf("[-] ERROR: file not found: %s\n", argv[i*2+1]);

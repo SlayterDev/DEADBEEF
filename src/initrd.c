@@ -13,7 +13,7 @@ int nRootNodes;
 struct dirent dirent;
 
 static u32int initrdRead(fsNode_t *node, u32int offset, u32int size, u8int *buffer) {
-	//monitorWrite("Get Header\n");
+	DEBUGmonitorWrite("Get Header\n");
 	initrdFileHeader_t header = fileHeaders[node->inode];
 	if (offset > header.length)
 		return 0;
@@ -21,7 +21,7 @@ static u32int initrdRead(fsNode_t *node, u32int offset, u32int size, u8int *buff
 	if (offset + size > header.length)
 		size = header.length - offset;
 
-	//monitorWrite("Copy Mem\n");
+	DEBUGmonitorWrite("Copy Mem\n");
 	memcpy(buffer, (u8int *)(header.offset + offset), size);
 	return size;
 }

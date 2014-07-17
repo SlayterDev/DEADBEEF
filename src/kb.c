@@ -46,11 +46,56 @@ unsigned char kbdus[128] =
 
 modifierKeys_t mK;
 
+char charToSymbol(char c) {
+	switch (c) {
+		case '1':
+			c = '!';
+			break;
+		case '2':
+			c = '@';
+			break;
+		case '3':
+			c = '#';
+			break;
+		case '4':
+			c = '$';
+			break;
+		case '5':
+			c = '%';
+			break;
+		case '6':
+			c = '^';
+			break;
+		case '7':
+			c = '&';
+			break;
+		case '8':
+			c = '*';
+			break;
+		case '9':
+			c = '(';
+			break;
+		case '0':
+			c = ')';
+			break;
+		case '-':
+			c = '_';
+			break;
+		case '=':
+			c = '+';
+			break;
+	}
+
+	return c;
+}
+
 char upperChar(char c) {
 	char c2;
 	if (c >= 'a' && c <= 'z') {
 		c2 = ('A' + c - 'a');
 		return c2;
+	} else if ((c >= '0' && c <= '=') || c == '-') {
+		return charToSymbol(c);
 	} else {
 		return c;
 	}

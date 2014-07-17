@@ -181,30 +181,21 @@ void scanDec(int *n) {
 // for what happens
 void DBscanf(const char *format, ...) {
 	u8int formNxt = 0; // next char is format
-	char formList[64];
-	int formCnt = 0;
+	char formList[64]; // list of arg types in order
+	int formCnt = 0;   // count of args
 
-	int readXtra = 0;
-	int numXtra[64];
-
-	int i = 0, xtraCntr = 0, xtraPtr = 0;
+	int i = 0;
 	while (format[i]) {
-		if (formNxt) {
+		if (formNxt) {	 // this char is arg type
 			formNxt = 0; // reset flag
 
+			// only int and string supported
 			if (format[i] == 'd' || format[i] == 's')
-				formList[formCnt++] = format[i];
-		} else if (format[i] != '%') {
-			readXtra = 1;
+				formList[formCnt++] = format[i]; // add arg type to list
 		}
 
-		if (format[i] == '%') {
-			formNxt = 1;
-			readXtra = 0;
-		} else if (readXtra) {
-			xtraCntr++;
-		}
-
+		if (format[i] == '%')
+			formNxt = 1; // next char is arg type
 
 		i++;
 	}
@@ -213,9 +204,9 @@ void DBscanf(const char *format, ...) {
 	va_start(list, format);
 	for (i = 0; i < formCnt; i++) {
 		if (formList[i] == 'd') {
-			scanDec(va_arg(list, int*));
+			scanDec(va_arg(list, int*)); // scan int
 		} else if (formList[i] == 's') {
-			scanStr(va_arg(list, char**));
+			scanStr(va_arg(list, char**)); // scan string
 		}
 	}
 	va_end(list);

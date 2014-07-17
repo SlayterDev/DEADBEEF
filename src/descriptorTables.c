@@ -19,9 +19,9 @@ idtEntry_t	idtEntries[256];
 idtPtr_t	idtPtr;
 
 void initDescriptorTables() {
-	//monitorWrite("initGDT\n");
+	//DEBUGmonitorWrite("initGDT\n");
 	initGdt();
-	//monitorWrite("initIdt\n");
+	//DEBUGmonitorWrite("initIdt\n");
 	initIdt();
 }
 

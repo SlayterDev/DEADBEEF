@@ -12,7 +12,7 @@
 
 extern u32int placementAddress;
 
-int main(struct multiboot *mbootPtr) {
+int kernelMain(struct multiboot *mbootPtr) {
 	// Init code here
 	monitorClear();
 	initDescriptorTables();

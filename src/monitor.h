@@ -13,6 +13,8 @@ void monitorClear();
 
 // Write string to terminal
 void monitorWrite(const char *c);
+void monitorWriteLine(const char *c);
+void DEBUGmonitorWrite(const char *c);
 
 void monitorBackSpace();
 

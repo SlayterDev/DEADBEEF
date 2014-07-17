@@ -3,6 +3,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#define DEBUG 1
+
 typedef unsigned int   u32int;
 typedef 		 int   s32int;
 typedef unsigned short u16int;

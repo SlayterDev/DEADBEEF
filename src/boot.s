@@ -28,12 +28,12 @@ mboot:
 	dd start
 
 [GLOBAL start]
-[EXTERN main]
+[EXTERN kernelMain]
 
 start:
 	push ebx
 
 	; Execute kernel
 	cli
-	call main
+	call kernelMain
 	jmp $

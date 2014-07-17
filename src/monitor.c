@@ -6,6 +6,28 @@ u16int cursorX;
 u16int cursorY;
 u16int *terminalBuffer = (u16int *)0xB8000;
 
+enum vgaColor {
+	COLOR_BLACK = 0,
+	COLOR_BLUE = 1,
+	COLOR_GREEN = 2,
+	COLOR_CYAN = 3,
+	COLOR_RED = 4,
+	COLOR_MAGENTA = 5,
+	COLOR_BROWN = 6,
+	COLOR_LIGHT_GREY = 7,
+	COLOR_DARK_GREY = 8,
+	COLOR_LIGHT_BLUE = 9,
+	COLOR_LIGHT_GREEN = 10,
+	COLOR_LIGHT_CYAN = 11,
+	COLOR_LIGHT_RED = 12,
+	COLOR_LIGHT_MAGENTA = 13,
+	COLOR_LIGHT_BROWN = 14,
+	COLOR_WHITE = 15,
+};
+
+u8int backColor = COLOR_BLACK;
+u8int foreColor = COLOR_WHITE;
+
 static void moveCursor() {
 	u16int cursorLocation = cursorY * 80 + cursorX;
 	outb(0x3D4, 14);
@@ -33,8 +55,8 @@ static void scroll() {
 }
 
 void monitorPut(char c) {
-	u8int backColor = 0;
-	u8int foreColor = 15;
+	/*backColor = COLOR_BLACK;
+	foreColor = COLOR_WHITE;*/
 
 	u8int attributeByte = (backColor << 4) | (foreColor & 0x0F);
 	u16int attribute = attributeByte << 8;
@@ -83,6 +105,21 @@ void monitorWrite(const char *c) {
 	while (c[i]) {
 		monitorPut(c[i++]);
 	}
+}
+
+void monitorWriteLine(const char *c) {
+	monitorWrite(c);
+	monitorPut('\n');
+}
+
+void DEBUGmonitorWrite(const char *c) {
+	if (!DEBUG)
+		return;
+
+	foreColor = COLOR_RED;
+	monitorWrite("[*] DEBUG: ");
+	foreColor = COLOR_WHITE;
+	monitorWrite(c);
 }
 
 void monitorBackSpace() {

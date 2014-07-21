@@ -23,6 +23,7 @@ typedef struct modifierKeys modifierKeys_t;
 // Install the keyboard handler
 void installKeyboard();
 
+char getch();
 // Scans a string from the "command line" until new line is pressed
 // Should pass un allocated char pointer
 // function will allocate enough memory and store the scanned string

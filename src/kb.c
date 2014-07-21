@@ -47,9 +47,12 @@ unsigned char kbdus[128] =
 
 modifierKeys_t mK;
 
-u8int readingInput = 0;
-char tempBuffer[256];
-u32int bufferCount = 0;
+u8int readingInput = 0; // 1 when scaning
+char tempBuffer[256]; 	// buffer to hold user input
+u32int bufferCount = 0; // counter to keep track of buffer length
+
+u8int getchFlag = 0; 	// 1 when reading for getch()
+char getchChar = '\0';
 
 char charToSymbol(char c) {
 	switch (c) {
@@ -140,13 +143,28 @@ void keyboardHandler(registers_t regs) {
 			else
 				tempBuffer[bufferCount] = upperChar(kbdus[scancode]);
 			bufferCount++;
+		} else if (getchFlag && (scancode != 42 && scancode != 54)) {
+			if (!mK.lShift)
+				getchChar = kbdus[scancode];
+			else
+				getchChar = upperChar(kbdus[scancode]);
+			getchFlag = 0;
 		}
-
 		if (scancode == 42 || scancode == 54) {
 			// shift keys
 			mK.lShift = 1;
 		}
 	}
+}
+
+char getch() {
+	getchFlag = 1;
+
+	while (getchFlag) {
+		// blocking
+	}
+
+	return getchChar;
 }
 
 void scanStr(char **buf) {

@@ -59,6 +59,10 @@ int kernelMain(struct multiboot *mbootPtr) {
 	monitorWrite("Read from user: ");
 	monitorWrite(str);
 	monitorWrite("\n>");
+	char c = getch();
+	monitorWrite("Read from user: ");
+	monitorPut(c);
+	monitorWrite("\n>");
 	
 
 	return 0xDEADBEEF;
